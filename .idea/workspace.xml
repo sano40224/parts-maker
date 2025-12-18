@@ -4,20 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="792311eb-8f11-49c7-9235-6f5a1b7be786" name="変更" comment="App.cssの削除">
-      <change afterPath="$PROJECT_DIR$/back/app/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/app/api/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/app/api/auth.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/app/api/parts.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/app/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/app/extensions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/app/models/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/app/models/part.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/app/models/user.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="792311eb-8f11-49c7-9235-6f5a1b7be786" name="変更" comment="back周りの開発">
+      <change afterPath="$PROJECT_DIR$/front/src/components/CyberCard.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/src/components/PartIcon.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/src/components/Sidebar.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/src/components/Sidebar.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/src/screens/BuilderScreen.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/src/screens/CreateScreen.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/src/screens/CreateScreen.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/src/screens/LoginScreen.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/src/screens/LoginScreen.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/src/screens/ProfileScreen.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/src/screens/Profilescreen.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/CyberCard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/main.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,6 +74,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\PyCharm 2025.1.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -99,7 +105,10 @@
       <workItem from="1764898936833" duration="582000" />
       <workItem from="1765284041412" duration="2927000" />
       <workItem from="1765430607577" duration="506000" />
-      <workItem from="1765499325167" duration="1095000" />
+      <workItem from="1765499325167" duration="3380000" />
+      <workItem from="1765505147041" duration="1637000" />
+      <workItem from="1766020089897" duration="5887000" />
+      <workItem from="1766061089905" duration="1157000" />
     </task>
     <task id="LOCAL-00001" summary="App.cssの削除">
       <option name="closed" value="true" />
@@ -117,7 +126,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764866855237</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="back周りの開発">
+      <option name="closed" value="true" />
+      <created>1765500674438</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1765500674438</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,6 +153,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="App.cssの削除" />
-    <option name="LAST_COMMIT_MESSAGE" value="App.cssの削除" />
+    <MESSAGE value="back周りの開発" />
+    <option name="LAST_COMMIT_MESSAGE" value="back周りの開発" />
   </component>
 </project>
