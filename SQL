@@ -1,0 +1,63 @@
+CREATE DATABASE IF NOT EXISTS parts_maker_db;
+USE parts_maker_db;
+
+CREATE TABLE t_user (
+    UserId INT AUTO_INCREMENT PRIMARY KEY,
+    Password VARCHAR(255) NOT NULL,
+    MailAddress VARCHAR(255) NOT NULL UNIQUE,
+    UserName VARCHAR(50) NOT NULL,
+    created_at DATETIME
+) ENGINE=InnoDB;
+
+CREATE TABLE t_category (
+    CategoryId INT AUTO_INCREMENT PRIMARY KEY,
+    CategoryName VARCHAR(50) NOT NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE t_post (
+    PostId INT AUTO_INCREMENT PRIMARY KEY,
+    UserId INT NOT NULL,
+    CategoryId INT NOT NULL,
+    PostText VARCHAR(255),
+    Setting TEXT,
+    HtmlCode TEXT,
+    CssCode TEXT,
+    is_delete DATETIME DEFAULT NULL,
+    created_at DATETIME,
+    updated_at DATETIME,
+
+    FOREIGN KEY (UserId) REFERENCES t_user(UserId) ON DELETE CASCADE,
+    FOREIGN KEY (CategoryId) REFERENCES t_category(CategoryId)
+) ENGINE=InnoDB;
+
+CREATE TABLE t_like (
+    LikeId INT AUTO_INCREMENT PRIMARY KEY,
+    UserId INT NOT NULL,
+    PostId INT NOT NULL,
+    created_at DATETIME,
+
+    FOREIGN KEY (UserId) REFERENCES t_user(UserId) ON DELETE CASCADE,
+    FOREIGN KEY (PostId) REFERENCES t_post(PostId) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE t_favorite (
+    FavoriteId INT AUTO_INCREMENT PRIMARY KEY,
+    UserId INT NOT NULL,
+    PostId INT NOT NULL,
+    created_at DATETIME,
+
+    FOREIGN KEY (UserId) REFERENCES t_user(UserId) ON DELETE CASCADE,
+    FOREIGN KEY (PostId) REFERENCES t_post(PostId) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE t_comment (
+    CommentId INT AUTO_INCREMENT PRIMARY KEY,
+    UserId INT NOT NULL,
+    PostId INT NOT NULL,
+    CommentText VARCHAR(255) NOT NULL,
+    `delete` BOOLEAN DEFAULT FALSE,
+    created_at DATETIME,
+
+    FOREIGN KEY (UserId) REFERENCES t_user(UserId) ON DELETE CASCADE,
+    FOREIGN KEY (PostId) REFERENCES t_post(PostId) ON DELETE CASCADE
+) ENGINE=InnoDB;

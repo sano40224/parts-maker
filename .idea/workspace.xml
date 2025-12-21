@@ -4,23 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="792311eb-8f11-49c7-9235-6f5a1b7be786" name="変更" comment="back周りの開発">
-      <change afterPath="$PROJECT_DIR$/front/src/screens/BuilderScreen.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/screens/HomeScreen.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/src/screens/HomeScreen.jsx" afterDir="false" />
+    <list default="true" id="792311eb-8f11-49c7-9235-6f5a1b7be786" name="変更" comment="フロントの整形">
+      <change afterPath="$PROJECT_DIR$/SQL" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/CyberCard.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/BlueprintCard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/CyberCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/BlueprintCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/Sidebar.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/Sidebar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/screens/BuilderScreen.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/screens/BuilderScreen.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/screens/BuilderScreen.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/screens/BuilderScreen.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/screens/CreateScreen.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/screens/CreateScreen.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/screens/CreateScreen.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/screens/CreateScreen.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/screens/LoginScreen.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/screens/LoginScreen.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/screens/LoginScreen.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/screens/LoginScreen.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/screens/ProfileScreen.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/screens/ProfileScreen.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +24,8 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/front" />
+    <option name="RECENT_COMMON_BRANCH" value="master" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -59,23 +48,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Node.js.App.jsx.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/yuuki/PycharmProjects/parts-maker&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\PyCharm 2025.1.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Node.js.App.jsx.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "builder",
+    "last_opened_file_path": "C:/Users/yuuki/PycharmProjects/parts-maker",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\PyCharm 2025.1.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\yuuki\PycharmProjects\parts-maker\back\app" />
@@ -107,6 +96,7 @@
       <workItem from="1765505147041" duration="1637000" />
       <workItem from="1766020089897" duration="5887000" />
       <workItem from="1766061089905" duration="2619000" />
+      <workItem from="1766319464528" duration="4980000" />
     </task>
     <task id="LOCAL-00001" summary="App.cssの削除">
       <option name="closed" value="true" />
@@ -140,7 +130,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766076292968</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="フロントの整形">
+      <option name="closed" value="true" />
+      <created>1766319795567</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1766319795567</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,6 +158,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="App.cssの削除" />
     <MESSAGE value="back周りの開発" />
-    <option name="LAST_COMMIT_MESSAGE" value="back周りの開発" />
+    <MESSAGE value="フロントの整形" />
+    <option name="LAST_COMMIT_MESSAGE" value="フロントの整形" />
   </component>
 </project>
