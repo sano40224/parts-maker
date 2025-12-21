@@ -5,10 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="792311eb-8f11-49c7-9235-6f5a1b7be786" name="変更" comment="フロントの整形">
-      <change afterPath="$PROJECT_DIR$/SQL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/extensions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/src/api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/src/context/AuthContext.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/src/screens/RegisterScreen.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/screens/BuilderScreen.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/screens/BuilderScreen.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/screens/BuilderScreen.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/screens/BuilderScreen.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/app/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/app/api/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/back/routes/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/app/api/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/back/routes/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/app/api/parts.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/app/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/back/routes/posts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/app/extensions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/app/models/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/app/models/part.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/app/models/user.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/back/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/components/Sidebar.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/Sidebar.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/components/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/screens/LoginScreen.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/screens/LoginScreen.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/screens/LoginScreen.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/screens/LoginScreen.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,13 +39,16 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Python Unit Test" />
         <option value="Python Script" />
+        <option value="JavaScript File" />
+        <option value="JSX File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_COMMON_BRANCH" value="master" />
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/front" />
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -53,7 +76,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Node.js.App.jsx.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "builder",
+    "git-widget-placeholder": "backCreate",
     "last_opened_file_path": "C:/Users/yuuki/PycharmProjects/parts-maker",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -67,6 +90,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\yuuki\PycharmProjects\parts-maker\front\src" />
+      <recent name="C:\Users\yuuki\PycharmProjects\parts-maker\back" />
       <recent name="C:\Users\yuuki\PycharmProjects\parts-maker\back\app" />
     </key>
   </component>
