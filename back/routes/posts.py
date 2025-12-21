@@ -17,10 +17,10 @@ def get_posts():
 def create_post():
     data = request.get_json()
 
-    # フロントエンドからのデータを受け取る
-    title = data.get('title')  # これを PostText に入れる
+    title = data.get('title')  # PostTextに入る
     html_code = data.get('html_code')
     css_code = data.get('css_code')
+    setting = data.get('setting')  # 🆕 追加: 配置データのJSONを受け取る
 
     if not title:
         return jsonify({"message": "タイトルは必須です"}), 400
@@ -29,6 +29,7 @@ def create_post():
         PostText=title,
         HtmlCode=html_code,
         CssCode=css_code,
+        Setting=setting,  # 🆕 DBのSettingカラムに保存
         user=current_user
     )
     db.session.add(new_post)
