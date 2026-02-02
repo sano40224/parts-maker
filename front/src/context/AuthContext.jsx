@@ -7,6 +7,8 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  console.log("現在のAPI接続先:", api.defaults.baseURL);
+
   // 初回ロード時にログイン状態を確認
   useEffect(() => {
     const checkLoggedIn = async () => {
