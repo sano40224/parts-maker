@@ -66,7 +66,7 @@ class Post(db.Model):
     fork_count = db.Column(db.Integer, default=0)
     original_author = db.Column(db.String(255), nullable=True)
 
-    ThumbnailData = db.Column(LONGTEXT, nullable=True)
+    ThumbnailData = db.Column(db.Text)
 
     likes = db.relationship('Like', backref='post', lazy='dynamic')
 
