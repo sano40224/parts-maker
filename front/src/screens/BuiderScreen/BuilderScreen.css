@@ -1,9 +1,9 @@
 /* src/screens/BuilderScreen.css */
 .builder-container {
   display: flex;
-  height: calc(100vh - 56px);
+  height: calc(100vh - 60px);
   border-top: 1px solid var(--border-color);
-  background: white;
+  background-color: #f1f5f9;
   overflow: hidden;
 }
 
@@ -213,8 +213,8 @@ input[type="checkbox"] {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: #f1f5f9;
-  position: relative;
+  padding: 20px;
+  overflow: hidden;
 }
 
 .toolbar {
@@ -263,11 +263,12 @@ input[type="checkbox"] {
 
 .canvas-area {
   flex: 1;
-  position: relative;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  position: relative; /* 絶対配置の基準 */
   overflow: hidden;
-  background-image:
-    linear-gradient(rgba(37, 99, 235, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
+  background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
@@ -302,11 +303,10 @@ input[type="checkbox"] {
   position: absolute;
   width: 10px;
   height: 10px;
-  background: white;
-  border: 2px solid var(--primary);
-  border-radius: 50%;
-  z-index: 20;
-  display: none; /* デフォルト非表示 */
+  background-color: #ffffff;
+  border: 1px solid #3b82f6; /* 青枠 */
+  border-radius: 2px;
+  z-index: 50; /* 最前面 */
 }
 
 .canvas-element-wrapper.selected .resize-handle {
@@ -356,4 +356,15 @@ input[type="checkbox"] {
   flex: 1;
   overflow: auto;
   white-space: pre;
+}
+
+.selected-element {
+  outline: 2px solid #3b82f6 !important;
+  z-index: 10;
+}
+
+.disabled-panel {
+  opacity: 0.6;
+  pointer-events: none; /* クリック不可にする */
+  filter: grayscale(100%);
 }

@@ -1,59 +1,82 @@
+// src/App.jsx
+
 import React, { useState } from 'react';
-import { AuthProvider, useAuth } from './context/AuthContext'; // 作成したContextをインポート
 import Sidebar from './components/Sidebar';
-import HomeScreen from './screens/HomeScreen';
-import CreateScreen from './screens/CreateScreen';
-import LoginScreen from './screens/LoginScreen';
-import RegisterScreen from './screens/RegisterScreen'; // 新規追加が必要
-import BuilderScreen from './screens/BuilderScreen';
+import HomeScreen from './screens/HomeScreen/HomeScreen.jsx';
+import BuilderScreen from './screens/BuiderScreen/BuilderScreen.jsx';
+import RegisterScreen from './screens/RegisterScreen/RegisterScreen.jsx';
+import LoginScreen from './screens/LoginScreen/LoginScreen.jsx';
+import ProfileScreen from './screens/ProfileScreen/ProfileScreen.jsx';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import './App.css';
 
-// 実際の表示ロジックを行うコンポーネント
-const AppContent = () => {
-  const { user, loading } = useAuth(); // AuthContextからログイン情報とロード状態を取得
-  const [currentScreen, setCurrentScreen] = useState('home');
-  const [isRegisterMode, setIsRegisterMode] = useState(false); // ログイン画面と登録画面の切り替え用
+// 認証が必要な画面のラッパー
+const AuthenticatedApp = () => {
+  const [activeTab, setActiveTab] = useState('home');
+  const [editingPost, setEditingPost] = useState(null);
 
-  // 1. セッション確認中（ロード中）は何も表示しないか、ローディング画面を出す
-  if (loading) {
-    return <div className="loading-screen">読み込み中...</div>;
-  }
+  const handleEditPost = (post) => {
+    setEditingPost(post);
+    setActiveTab('create');
+  };
 
-  // 2. ログインしていない場合（userがnull）
-  if (!user) {
-    // 登録モードなら登録画面、そうでなければログイン画面を表示
-    if (isRegisterMode) {
-      return <RegisterScreen onSwitchToLogin={() => setIsRegisterMode(false)} />;
-    }
-    return <LoginScreen onSwitchToRegister={() => setIsRegisterMode(true)} />;
-  }
+  const handleBackToHome = () => {
+    setEditingPost(null);
+    setActiveTab('home');
+  };
 
-  // 3. ログインしている場合（メインアプリを表示）
   return (
     <div className="app-container">
-      <Sidebar activeTab={currentScreen} setActiveTab={setCurrentScreen} />
-
+      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
       <main className="main-content">
-        {currentScreen === 'home' && <HomeScreen />}
-        {currentScreen === 'create' && <CreateScreen onBack={() => setCurrentScreen('home')} />}
-        {currentScreen === 'parts' && (
-          <BuilderScreen onBack={() => setCurrentScreen('home')} />
+
+        {/* ホーム画面（通常） */}
+        {activeTab === 'home' && (
+          <HomeScreen onEditPost={handleEditPost} filterMode="all" />
         )}
-        {currentScreen === 'saved' && <div>Saved Screen (Under Construction)</div>}
-        {currentScreen === 'profile' && <div>Profile Screen (Under Construction)</div>}
+
+        {/* 🆕 いいね一覧画面 (HomeScreenを再利用！) */}
+        {activeTab === 'saved' && (
+          <HomeScreen onEditPost={handleEditPost} filterMode="liked" />
+        )}
+
+        {/* 作成画面 */}
+        {(activeTab === 'create' || activeTab === 'parts') && (
+          <BuilderScreen onBack={handleBackToHome} initialData={editingPost} />
+        )}
+
+        {/* 🆕 プロフィール画面 */}
+        {activeTab === 'profile' && (
+           <ProfileScreen onEditPost={handleEditPost} />
+        )}
+
       </main>
     </div>
   );
 };
 
-// 外枠のAppコンポーネント
-function App() {
+export default function App() {
   return (
-    // AuthProviderでアプリ全体を包むことで、どこでもログイン情報を使えるようにする
     <AuthProvider>
-      <AppContent />
+      <MainContent />
     </AuthProvider>
   );
 }
 
-export default App;
+// ログイン状態によって出し分け
+function MainContent() {
+  const { user, loading } = useAuth();
+  const [isRegistering, setIsRegistering] = useState(false);
+
+  if (loading) return <div className="loading">LOADING SYSTEM...</div>;
+
+  if (!user) {
+    return isRegistering ? (
+      <RegisterScreen onSwitchToLogin={() => setIsRegistering(false)} />
+    ) : (
+      <LoginScreen onSwitchToRegister={() => setIsRegistering(true)} />
+    );
+  }
+
+  return <AuthenticatedApp />;
+}

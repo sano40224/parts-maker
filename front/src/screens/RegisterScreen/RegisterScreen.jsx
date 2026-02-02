@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { PenTool } from 'lucide-react';
-import api from '../api';
-import { useAuth } from '../context/AuthContext';
-import './LoginScreen.css'; // CSSはログイン画面と共有
+import api from '../../api.js';
+import { useAuth } from '../../context/AuthContext.jsx';
+import '../LoginScreen/LoginScreen.css'; // CSSはログイン画面と共有
 
 export default function RegisterScreen({ onSwitchToLogin }) {
   const [username, setUsername] = useState('');
@@ -32,7 +32,7 @@ export default function RegisterScreen({ onSwitchToLogin }) {
         <div style={{ color: 'var(--primary)', marginBottom: '16px' }}>
           <PenTool size={40} style={{ opacity: 0.8 }} />
         </div>
-        <h1 className="login-title">BLUEPRINT.REGISTER</h1>
+        <h1 className="login-title">PARTS-MAKER.REGISTER</h1>
         <p className="login-subtitle">NEW_USER // CREATE_ENTRY</p>
 
         <form className="login-form" onSubmit={handleSubmit}>
@@ -40,17 +40,16 @@ export default function RegisterScreen({ onSwitchToLogin }) {
 
           <input
             type="text"
-            placeholder="DEFINE USER_ID"
+            placeholder="USER_NAME"
             className="login-input"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
 
-          {/* 🆕 追加: メールアドレス入力欄 */}
           <input
             type="email"
-            placeholder="LINK EMAIL_ADDRESS"
+            placeholder="EMAIL_ADDRESS"
             className="login-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -59,7 +58,7 @@ export default function RegisterScreen({ onSwitchToLogin }) {
 
           <input
             type="password"
-            placeholder="DEFINE ACCESS_KEY"
+            placeholder="PASSWORD"
             className="login-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -67,14 +66,14 @@ export default function RegisterScreen({ onSwitchToLogin }) {
           />
 
           <button type="submit" className="login-btn">
-            ESTABLISH CONNECTION
+            REGISTER
           </button>
         </form>
 
         <div className="login-switch-container">
           <span>EXISTING ID?</span>
           <button onClick={onSwitchToLogin} className="login-switch-btn">
-            AUTHENTICATE &gt;&gt;
+            LOGIN &gt;&gt;
           </button>
         </div>
       </div>

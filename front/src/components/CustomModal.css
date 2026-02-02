@@ -1,0 +1,110 @@
+/* src/components/CustomModal.css */
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(15, 23, 42, 0.4); /* 少し暗く */
+  backdrop-filter: blur(2px); /* 背景をぼかす */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-container {
+  background: #ffffff;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  animation: scaleIn 0.2s ease-out;
+  border: 1px solid #e2e8f0;
+}
+
+.modal-header {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.modal-title-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* タイプ別の色 */
+.modal-success { color: #10b981; background-color: #f0fdf4; }
+.modal-error { color: #ef4444; background-color: #fef2f2; }
+.modal-confirm { color: #8b5cf6; background-color: #f5f3ff; } /* アプリのテーマカラー(紫) */
+.modal-info { color: #3b82f6; background-color: #eff6ff; }
+
+.modal-close-btn {
+  background: none; border: none; cursor: pointer;
+  color: #94a3b8; display: flex;
+}
+.modal-close-btn:hover { color: #64748b; }
+
+.modal-body {
+  padding: 24px 20px;
+  color: #334155;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.modal-footer {
+  padding: 16px 20px;
+  background-color: #f8fafc;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.modal-btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.modal-btn.secondary {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: #64748b;
+}
+.modal-btn.secondary:hover { background: #f1f5f9; }
+
+.modal-btn.primary {
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* ボタンの色もタイプに合わせる */
+.modal-success-btn { background-color: #10b981; }
+.modal-success-btn:hover { background-color: #059669; }
+
+.modal-error-btn { background-color: #ef4444; }
+.modal-error-btn:hover { background-color: #dc2626; }
+
+.modal-confirm-btn { background-color: #8b5cf6; }
+.modal-confirm-btn:hover { background-color: #7c3aed; }
+
+.modal-info-btn { background-color: #3b82f6; }
+.modal-info-btn:hover { background-color: #2563eb; }
+
+.modal-delete { color: #ef4444; background-color: #fef2f2; }
+.modal-delete-btn { background-color: #ef4444; }
+.modal-delete-btn:hover { background-color: #dc2626; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }

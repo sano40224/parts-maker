@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PenTool } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext.jsx';
 import './LoginScreen.css';
 
 export default function LoginScreen({ onSwitchToRegister }) {
@@ -28,15 +28,14 @@ export default function LoginScreen({ onSwitchToRegister }) {
         <div style={{ color: 'var(--primary)', marginBottom: '16px' }}>
           <PenTool size={40} />
         </div>
-        <h1 className="login-title">BLUEPRINT.ACCESS</h1>
-        <p className="login-subtitle">SECURE_WORKSPACE // V2.0</p>
+        <h1 className="login-title">PARTS-MAKER</h1>
 
         <form className="login-form" onSubmit={handleSubmit}>
           {error && <div className="login-error">IsError: {error}</div>}
 
           <input
             type="text" // バックエンドに合わせてemailからtextに変更
-            placeholder="USER_ID or EMAIL"
+            placeholder="EMAIL"
             className="login-input"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -44,21 +43,21 @@ export default function LoginScreen({ onSwitchToRegister }) {
           />
           <input
             type="password"
-            placeholder="ACCESS_KEY"
+            placeholder="PASSWORD"
             className="login-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
           <button type="submit" className="login-btn">
-            INITIALIZE SESSION
+            LOGIN
           </button>
         </form>
 
         <div className="login-switch-container">
           <span>NO ACCESS ID?</span>
           <button onClick={onSwitchToRegister} className="login-switch-btn">
-            CREATE_ENTRY &gt;&gt;
+            REGISTER &gt;&gt;
           </button>
         </div>
       </div>
