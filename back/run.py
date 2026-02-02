@@ -16,8 +16,12 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
 
-    # CORS設定: React(localhost:3000)からのリクエストを許可し、Cookie(credentials)を通す
-    CORS(app, supports_credentials=True, origins="*")
+    CORS(app, supports_credentials=True, origins=[
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://parts-maker.vercel.app",
+        "https://parts-maker-of6k9w143-shiro40224s-projects.vercel.app"
+    ])
 
     # Blueprintの登録 (URLの接頭辞をつける)
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
