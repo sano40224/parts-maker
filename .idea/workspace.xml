@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="792311eb-8f11-49c7-9235-6f5a1b7be786" name="変更" comment="フロントの整形">
+    <list default="true" id="792311eb-8f11-49c7-9235-6f5a1b7be786" name="変更" comment="表示機能の追加">
+      <change afterPath="$PROJECT_DIR$/front/src/components/mono" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/routes/posts.py" beforeDir="false" afterPath="$PROJECT_DIR$/back/routes/posts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/BlueprintCard.css" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/BlueprintCard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/components/BlueprintCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/components/BlueprintCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/screens/BuilderScreen.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/screens/BuilderScreen.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/screens/HomeScreen.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/screens/HomeScreen.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/back/run.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,12 +22,24 @@
         <option value="Python Script" />
         <option value="JavaScript File" />
         <option value="JSX File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform)); sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo, NoAppException&#10;for module in [&quot;main.py&quot;, &quot;wsgi.py&quot;, &quot;app.py&quot;]:&#10;    try: locals().update(ScriptInfo(app_import_path=module, create_app=None).load_app().make_shell_context()); print(&quot;\nFlask App: %s&quot; % app.import_name); break&#10;    except NoAppException: pass">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform)); sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo, NoAppException&#10;for module in [&quot;main.py&quot;, &quot;wsgi.py&quot;, &quot;app.py&quot;]:&#10;    try: locals().update(ScriptInfo(app_import_path=module, create_app=None).load_app().make_shell_context()); print(&quot;\nFlask App: %s&quot; % app.import_name); break&#10;    except NoAppException: pass" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
   <component name="Git.Settings">
-    <option name="RECENT_COMMON_BRANCH" value="master" />
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/front" />
+    <option name="RECENT_COMMON_BRANCH" value="view-parts" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -61,21 +69,24 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/yuuki/PycharmProjects/parts-maker",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "settings.editor.selected.configurable": "com.jetbrains.python.black.configuration.BlackFormatterConfigurable",
     "ts.external.directory.path": "C:\\Program Files\\JetBrains\\PyCharm 2025.1.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\yuuki\PycharmProjects\parts-maker\front\src" />
-      <recent name="C:\Users\yuuki\PycharmProjects\parts-maker\back" />
-      <recent name="C:\Users\yuuki\PycharmProjects\parts-maker\back\app" />
+      <recent name="C:\Users\yuuki\PycharmProjects\parts-maker\front\src\screens\RegisterScreen" />
+      <recent name="C:\Users\yuuki\PycharmProjects\parts-maker\front\src\screens\ProfileScreen" />
+      <recent name="C:\Users\yuuki\PycharmProjects\parts-maker\front\src\screens\LoginScreen" />
+      <recent name="C:\Users\yuuki\PycharmProjects\parts-maker\front\src\screens\HomeScreen" />
+      <recent name="C:\Users\yuuki\PycharmProjects\parts-maker\front\src\screens\CreateScreen" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -105,6 +116,16 @@
       <workItem from="1766020089897" duration="5887000" />
       <workItem from="1766061089905" duration="2619000" />
       <workItem from="1766319464528" duration="4980000" />
+      <workItem from="1768523692349" duration="6222000" />
+      <workItem from="1768985853085" duration="6867000" />
+      <workItem from="1769407633106" duration="3042000" />
+      <workItem from="1769490037612" duration="6498000" />
+      <workItem from="1769529068166" duration="24526000" />
+      <workItem from="1769665648994" duration="3524000" />
+      <workItem from="1769687091972" duration="3039000" />
+      <workItem from="1769693929643" duration="5148000" />
+      <workItem from="1770004646642" duration="435000" />
+      <workItem from="1770005379041" duration="318000" />
     </task>
     <task id="LOCAL-00001" summary="App.cssの削除">
       <option name="closed" value="true" />
@@ -146,7 +167,31 @@
       <option name="project" value="LOCAL" />
       <updated>1766319795567</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="表示機能の追加">
+      <option name="closed" value="true" />
+      <created>1766360840101</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1766360840101</updated>
+    </task>
+    <task id="LOCAL-00007" summary="表示機能の追加">
+      <option name="closed" value="true" />
+      <created>1769178860452</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1769178860452</updated>
+    </task>
+    <task id="LOCAL-00008" summary="表示機能の追加">
+      <option name="closed" value="true" />
+      <created>1769496339912</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1769496339912</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,6 +212,7 @@
     <MESSAGE value="App.cssの削除" />
     <MESSAGE value="back周りの開発" />
     <MESSAGE value="フロントの整形" />
-    <option name="LAST_COMMIT_MESSAGE" value="フロントの整形" />
+    <MESSAGE value="表示機能の追加" />
+    <option name="LAST_COMMIT_MESSAGE" value="表示機能の追加" />
   </component>
 </project>
