@@ -37,7 +37,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_COMMON_BRANCH" value="view-parts" />
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/front" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -65,7 +65,7 @@
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;Node.js.App.jsx.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/yuuki/PycharmProjects/parts-maker&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -123,7 +123,7 @@
       <workItem from="1769687091972" duration="3039000" />
       <workItem from="1769693929643" duration="5148000" />
       <workItem from="1770004646642" duration="435000" />
-      <workItem from="1770005379041" duration="5587000" />
+      <workItem from="1770005379041" duration="6505000" />
     </task>
     <task id="LOCAL-00001" summary="App.cssの削除">
       <option name="closed" value="true" />
