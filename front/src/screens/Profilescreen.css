@@ -1,0 +1,90 @@
+.profile-screen {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.profile-banner {
+  background-color: #e2e8f0; /* 画像がない場合のフォールバック */
+  border: 1px solid var(--border-color);
+}
+
+.banner-overlay {
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.8)); /* 白へのグラデーション */
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--text-main);
+  border-color: var(--border-color);
+}
+
+.profile-info-container {
+  /* ...位置調整はそのまま... */
+}
+
+.profile-avatar-wrapper {
+  background: #ffffff;
+  border-color: var(--accent-blue);
+  box-shadow: var(--shadow-md);
+}
+
+.status-badge {
+  background: #ffffff;
+  border-color: #22c55e;
+}
+
+.user-fullname {
+  color: var(--text-main);
+}
+
+.user-handle {
+  background: #f1f5f9;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+}
+
+.user-bio {
+  color: var(--text-main);
+  border-left-color: var(--accent-blue);
+}
+
+.stats-grid {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-box.border-left {
+  border-left: 1px solid #f1f5f9;
+}
+
+.stat-value {
+  color: var(--text-main);
+}
+
+.stat-value.cyan { color: var(--accent-blue); }
+.stat-value.white { color: var(--text-main); }
+.stat-value.pink { color: var(--accent-blue); }
+
+.tabs-header {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tab-btn {
+  color: var(--text-muted);
+}
+
+.tab-btn:hover {
+  background: var(--accent-light);
+  color: var(--accent-blue);
+}
+
+.tab-btn.active {
+  color: var(--accent-blue);
+  border-bottom-color: var(--accent-blue);
+}
+
+.empty-state {
+  border: 1px dashed var(--border-color);
+  background: #f8fafc;
+}

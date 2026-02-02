@@ -1,0 +1,41 @@
+/* src/App.css */
+:root {
+  --bg-color: #f8fafc;
+  --grid-line: #e2e8f0;
+  --primary: #2563eb;       /* 設計図の青 */
+  --primary-light: #eff6ff;
+  --text-main: #334155;
+  --text-muted: #94a3b8;
+  --border-color: #cbd5e1;
+  --sidebar-width: 80px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+
+  /* 方眼紙背景 */
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* レイアウト用コンテナ */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: var(--sidebar-width); /* サイドバーの裏に隠れないようにする */
+  padding: 24px 40px;
+}
