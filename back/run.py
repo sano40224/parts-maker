@@ -17,7 +17,8 @@ def create_app():
     login_manager.init_app(app)
 
     # CORS設定: React(localhost:3000)からのリクエストを許可し、Cookie(credentials)を通す
-    CORS(app, supports_credentials=True, origins=["http://localhost:5173", "http://localhost:3000"])
+    CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}}, supports_credentials=True)
+
     # Blueprintの登録 (URLの接頭辞をつける)
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(posts_bp, url_prefix='/api/posts')
@@ -30,7 +31,6 @@ def create_app():
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
 
 if __name__ == '__main__':
     app = create_app()

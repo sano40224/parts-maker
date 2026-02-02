@@ -2,6 +2,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from extensions import db
 from datetime import datetime
+from sqlalchemy.dialects.mysql import LONGTEXT
 
 
 # --- t_user (ユーザーテーブル) ---
@@ -43,6 +44,7 @@ class Category(db.Model):
     CategoryName = db.Column(db.String(50), nullable=False)
 
 
+
 # --- t_post (投稿テーブル) ---
 class Post(db.Model):
     __tablename__ = 't_post'
@@ -62,8 +64,20 @@ class Post(db.Model):
 
     like_count = db.Column(db.Integer, default=0)
     fork_count = db.Column(db.Integer, default=0)
+    original_author = db.Column(db.String(255), nullable=True)
 
-    def to_dict(self):
+    ThumbnailData = db.Column(LONGTEXT, nullable=True)
+
+    likes = db.relationship('Like', backref='post', lazy='dynamic')
+
+    def to_dict(self, current_user_id=None):
+        is_liked = False
+        if current_user_id:
+            # 自分がこの投稿をいいねしているか確認
+            is_liked = db.session.query(Like).filter_by(
+                UserId=current_user_id,
+                PostId=self.PostId
+            ).first() is not None
         return {
             "PostId": self.PostId,
             "PostText": self.PostText,
@@ -71,7 +85,13 @@ class Post(db.Model):
             "CssCode": self.CssCode,
             "author": self.user.UserName if self.user else "Unknown",
             "like_count": self.like_count,
-            "created_at": self.created_at
+            "fork_count": self.fork_count,
+            "created_at": self.created_at,
+            "setting": self.Setting,
+            "author_id": self.UserId,
+            "thumbnail": self.ThumbnailData,
+            "original_author": self.original_author,
+            "is_liked": is_liked
         }
 
 
