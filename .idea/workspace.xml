@@ -37,7 +37,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_COMMON_BRANCH" value="view-parts" />
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/front" />
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -123,7 +123,7 @@
       <workItem from="1769687091972" duration="3039000" />
       <workItem from="1769693929643" duration="5148000" />
       <workItem from="1770004646642" duration="435000" />
-      <workItem from="1770005379041" duration="6505000" />
+      <workItem from="1770005379041" duration="6865000" />
     </task>
     <task id="LOCAL-00001" summary="App.cssの削除">
       <option name="closed" value="true" />
