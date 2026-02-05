@@ -20,7 +20,6 @@ def create_app():
         "http://localhost:5173",
         "http://localhost:3000",
         "https://parts-maker.vercel.app",
-        "https://parts-maker-of6k9w143-shiro40224s-projects.vercel.app"
     ])
 
     # Blueprintの登録 (URLの接頭辞をつける)

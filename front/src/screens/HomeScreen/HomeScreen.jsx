@@ -69,10 +69,6 @@ export default function HomeScreen({ onEditPost, filterMode = 'all' }) {
                 likes={post.like_count || 0}
                 downloads={post.fork_count || 0}
                 isLiked={post.is_liked}
-
-                // 🟢【ここを修正しました！】
-                // ProfileScreenと同じように htmlCode と cssCode を渡します
-                // setting={post.setting} は削除しました
                 htmlCode={post.HtmlCode}
                 cssCode={post.CssCode}
 
