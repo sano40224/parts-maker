@@ -3,6 +3,7 @@ from flask_cors import CORS
 from config import Config
 from extensions import db, login_manager
 from models import User
+import re
 
 # Blueprintのインポート
 from routes.auth import auth_bp
@@ -20,6 +21,7 @@ def create_app():
         "http://localhost:5173",
         "http://localhost:3000",
         "https://parts-maker.vercel.app",
+        re.compile(r"^https://parts-maker.*\.vercel\.app$")
     ])
 
     # Blueprintの登録 (URLの接頭辞をつける)
