@@ -14,9 +14,7 @@ export default function LoginScreen({ onSwitchToRegister }) {
     setError(''); // エラーをリセット
     try {
       await login(username, password);
-      // 成功するとApp.jsx側で自動的に画面が切り替わります
     } catch (err) {
-      // エラー表示。雰囲気に合わせて少しメカニカルなメッセージに
       setError('AUTH_FAILURE: IDまたはKEYが無効です。');
       console.error(err);
     }

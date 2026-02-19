@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import BlueprintCard from '../../components/BlueprintCard.jsx';
 import api from '../../api.js';
 import { Trash2 } from 'lucide-react';
-// 1. モーダルをインポート
 import { useModal, CustomModal } from '../../components/CustomModal.jsx';
 import './Profilescreen.css';
 
@@ -10,7 +9,6 @@ export default function ProfileScreen({ onEditPost }) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 2. モーダル用のフックを使用
   const { isOpen, config, closeModal, showDeleteConfirm, showAlert } = useModal();
 
   const fetchMyPosts = async () => {
@@ -29,7 +27,6 @@ export default function ProfileScreen({ onEditPost }) {
     fetchMyPosts();
   }, []);
 
-  // --- 修正: 削除処理 ---
   const handleDelete = (e, postId) => {
     e.stopPropagation();
 
@@ -56,7 +53,6 @@ export default function ProfileScreen({ onEditPost }) {
 
   return (
     <div>
-      {/* 3. モーダルコンポーネントを配置 */}
       <CustomModal isOpen={isOpen} config={config} onClose={closeModal} />
 
       <header className="home-header">

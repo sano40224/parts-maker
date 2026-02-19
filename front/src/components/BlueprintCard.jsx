@@ -18,7 +18,6 @@ export default function BlueprintCard({
   const [scale, setScale] = useState(1);
   const [isReady, setIsReady] = useState(false); // 描画準備完了フラグ
 
-  // --- Shadow DOM の構築 ---
   useEffect(() => {
     const host = shadowHostRef.current;
     if (!host) return;
@@ -28,7 +27,6 @@ export default function BlueprintCard({
       shadow = host.attachShadow({ mode: 'open' });
     }
 
-    // display: table を使うことで、中身のサイズを正確に測定できるようにする
     shadow.innerHTML = `
       <style>
         :host {
@@ -52,12 +50,10 @@ export default function BlueprintCard({
       </div>
     `;
 
-    // HTMLを流し込んだら、少し待ってから計測を開始する
     setTimeout(() => setIsReady(true), 50);
 
   }, [htmlCode, cssCode]);
 
-  // --- 自動縮小ロジック ---
   useLayoutEffect(() => {
     if (!isReady) return; // 準備ができるまで何もしない
 
@@ -68,7 +64,6 @@ export default function BlueprintCard({
       const rootEl = host.shadowRoot.getElementById('content-root');
       if (!rootEl) return;
 
-      // レンダリングを確実にするために requestAnimationFrame を使用
       requestAnimationFrame(() => {
          const wrapperWidth = wrapper.clientWidth - 40; // 上下左右の余白分を引く
          const wrapperHeight = wrapper.clientHeight - 40;

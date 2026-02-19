@@ -32,7 +32,9 @@ def create_post():
     title = data.get('title')  # PostTextに入る
     html_code = data.get('html_code')
     css_code = data.get('css_code')
-    setting = data.get('setting')  #  追加: 配置データのJSONを受け取る
+    setting = data.get('setting')
+    if isinstance(setting, (list, dict)):
+        setting = json.dumps(setting)
     original_author = data.get('original_author')
     thumbnail_data = data.get('thumbnail')
 
@@ -121,8 +123,7 @@ def toggle_like(post_id):
 @posts_bp.route('/liked', methods=['GET'])
 @login_required
 def get_liked_posts():
-    # Likeテーブルと結合して、自分がいいねしたPostだけ取得
-    liked_posts = db.session.query(Post).join(Like).filter(Like.UserId == current_user.UserId).order_by(Like.created_at.desc()).all()
+    liked_posts = db.session.query(Post).join(Like).filter(Like.UserId == current_user.UserId,Post.is_delete == None).order_by(Like.created_at.desc()).all()
     return jsonify([post.to_dict(current_user_id=current_user.UserId) for post in liked_posts])
 
 # フォーク数を増やすAPI

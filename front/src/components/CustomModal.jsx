@@ -1,6 +1,5 @@
 // src/components/CustomModal.jsx
 import React, { useState, useCallback } from 'react';
-// ↓↓↓ Trash2 を忘れずに追加してください
 import { X, CheckCircle, AlertTriangle, Info, HelpCircle, Trash2 } from 'lucide-react';
 import './CustomModal.css';
 

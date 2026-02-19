@@ -54,7 +54,7 @@ class Post(db.Model):
     CategoryId = db.Column(db.Integer, db.ForeignKey('t_category.CategoryId'), nullable=True)
 
     PostText = db.Column(db.String(255))  # タイトルや説明文として使用
-    Setting = db.Column(db.JSON, nullable=True)  # JSON設定
+    Setting = db.Column(db.Text, nullable=True)  # JSON設定
     HtmlCode = db.Column(db.Text, nullable=True)
     CssCode = db.Column(db.Text, nullable=True)
 

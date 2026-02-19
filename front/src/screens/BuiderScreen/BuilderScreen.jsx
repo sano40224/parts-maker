@@ -1,6 +1,5 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
-import { Settings, Type, MousePointer2, Plus, Code, Trash2, Palette, Layout, Scaling, Tag, Save, Sun, Box, AlignCenter, Square, ArrowUp, ArrowDown, Dices, Copy, Lock } from 'lucide-react';
-// 🗑️ html2canvas のインポートを削除しました
+import React, { useState, useRef, useCallback } from 'react';
+import { Settings, Type, MousePointer2, Plus, Code, Trash2, Palette, Layout, Scaling, Tag, Save, Sun, Box, AlignCenter, Square, ArrowUp, ArrowDown, Dices, Copy, Lock, Check, Image as ImageIcon } from 'lucide-react';
 import api from '../../api.js';
 import { useAuth } from '../../context/AuthContext';
 import { useModal, CustomModal } from '../../components/CustomModal';
@@ -18,8 +17,16 @@ const getInitialStyle = (type) => {
     shadowX: 0, shadowY: 0, shadowBlur: 0, shadowSpread: 0, shadowColor: '#94a3b8',
     enableHover: false, hover: { scale: 1, color: '#334155' }
   };
-  if (type === 'button') return { ...base, width: 120, height: 40, radius: 4, bgColor1: '#2563eb', color: '#ffffff', shadowY: 4, shadowBlur: 6, shadowColor: '#cbd5e1', hover: { ...base.hover, scale: 1.05 } };
+  if (type === 'button') return { ...base, width: 120, height: 40, radius: 4, bgColor1: '#2563eb', color: '#ffffff', shadowY: 4, shadowBlur: 6, shadowColor: '#cbd5e1', hover: { ...base.hover, scale: 1.05 } , backgroundImage: null ,backgroundSize: 'cover' };
   if (type === 'input') return { ...base, width: 200, height: 40, radius: 4, borderWidth: 1, bgColor1: '#ffffff', borderColor: '#cbd5e1', padding: 10 };
+  if (type === 'image') return {
+    ...base,
+    width: 200, height: 150,
+    radius: 4,
+    bgColor1: 'transparent',
+    src: 'https://placehold.co/200x150',
+    objectFit: 'cover'
+  };
   if (type === 'text') return { ...base, width: 100, height: 30, bgColor1: 'transparent', color: '#1e293b', fontSize: 16 };
   if (type === 'div') return { ...base, width: 300, height: 400, radius: 8, borderWidth: 1, borderColor: '#94a3b8', bgColor1: '#f8fafc', position: 'relative', overflow: 'hidden' };
   return base;
@@ -41,6 +48,15 @@ const createRandomStyle = (type) => {
 };
 
 const getBackgroundCss = (s) => s.bgType === 'solid' ? s.bgColor1 : `linear-gradient(${s.bgDirection}, ${s.bgColor1}, ${s.bgColor2})`;
+const getFullBackgroundValue = (s) => {
+  if (!s.backgroundImage) return getBackgroundCss(s); // 画像がなければ今まで通り
+
+  if (s.bgType === 'solid') {
+    return `url('${s.backgroundImage}') center / ${s.backgroundSize || 'cover'} no-repeat ${s.bgColor1}`;
+  } else {
+    return `url('${s.backgroundImage}') center / ${s.backgroundSize || 'cover'} no-repeat, linear-gradient(${s.bgDirection}, ${s.bgColor1}, ${s.bgColor2})`;
+  }
+};
 const getBoxShadowCss = (s) => `${s.shadowX}px ${s.shadowY}px ${s.shadowBlur}px ${s.shadowSpread}px ${s.shadowColor}`;
 const getZIndex = (type, isSelected) => {
   if (type === 'div') return 0;
@@ -58,6 +74,16 @@ const getGlobalPos = (el, allElements) => {
 
 const getElementStyle = (element, isSelected, canEdit) => {
     const s = element.style;
+    let backgroundStyle = { background: getBackgroundCss(s) };
+    if (s.backgroundImage) {
+        backgroundStyle = {
+            backgroundImage: `url(${s.backgroundImage})`,
+            backgroundSize: s.backgroundSize || 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: s.bgColor1
+        };
+    }
     return {
         position: 'absolute',
         left: element.x,
@@ -67,7 +93,7 @@ const getElementStyle = (element, isSelected, canEdit) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: getBackgroundCss(s),
+        background: getFullBackgroundValue(s),
         color: s.color,
         borderRadius: s.radius,
         fontSize: s.fontSize,
@@ -109,7 +135,7 @@ export default function BuilderScreen({ onBack, initialData }) {
   const [showCode, setShowCode] = useState(false);
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [editMode, setEditMode] = useState('normal');
-  const [hoveringId, setHoveringId] = useState(null);
+  const [setHoveringId] = useState(null);
 
   const operationRef = useRef({ type: null, handle: null, startX: 0, startY: 0, initial: { x: 0, y: 0, w: 0, h: 0 } });
 
@@ -264,12 +290,34 @@ export default function BuilderScreen({ onBack, initialData }) {
   };
 
   const handleFork = () => {
-    showConfirm('FORK PROJECT', 'このパーツをフォーク（複製）して編集しますか？', () => {
+    showConfirm('FORK PROJECT', 'このパーツをフォーク（複製）して編集しますか？', async () => {
+        if (initialData && initialData.PostId) {
+            await api.post(`/posts/${initialData.PostId}/fork`);
+            console.log("Fork count incremented");
+        }
         setIsForked(true);
         setPostTitle(prev => `Fork of ${prev}`);
-        if (initialData && initialData.author) { setOriginalAuthor(initialData.author); }
+        if (initialData && initialData.author) {
+            setOriginalAuthor(initialData.author);
+        }
         showAlert('SUCCESS', 'フォークしました。編集を開始できます。', 'success');
     });
+  };
+
+  const [copyStatus, setCopyStatus] = useState({ css: false, html: false });
+
+  // ▼ 追加: コピー関数
+  const handleCopy = async (text, type) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopyStatus(prev => ({ ...prev, [type]: true }));
+      setTimeout(() => {
+        setCopyStatus(prev => ({ ...prev, [type]: false }));
+      }, 2000);
+    } catch (err) {
+      console.error('Copy failed', err);
+      showAlert('ERROR', 'コピーに失敗しました', 'error');
+    }
   };
 
   const generateSource = () => {
@@ -278,6 +326,7 @@ export default function BuilderScreen({ onBack, initialData }) {
       const selector = el.className ? `.${el.className}` : `.el-${el.id}`;
       let positionStyle = el.parentId ? `position: absolute; top: ${el.y}px; left: ${el.x}px;` : `/* Root */ position: relative;`;
       const overflowStyle = el.type === 'div' ? 'overflow: hidden;' : '';
+      const objectFitStyle = el.type === 'image' ? `object-fit: ${s.objectFit};` : '';
       return `
 ${selector} {
   ${positionStyle}
@@ -285,22 +334,41 @@ ${selector} {
   width: ${typeof s.width === 'number' ? s.width + 'px' : s.width};
   height: ${typeof s.height === 'number' ? s.height + 'px' : s.height};
   display: flex; align-items: center; justify-content: center;
-  background: ${getBackgroundCss(s)};
+  background: ${getFullBackgroundValue(s)};
   color: ${s.color}; border-radius: ${s.radius}px; font-size: ${s.fontSize}px;
-  border: ${s.borderWidth}px solid ${s.borderColor}; box-shadow: ${getBoxShadowCss(s)};
+  border: ${s.borderWidth}px solid ${s.borderColor || s.bgColor1}; box-shadow: ${getBoxShadowCss(s)};
   cursor: ${el.type === 'button' ? 'pointer' : 'default'}; box-sizing: border-box; 
+  ${objectFitStyle}
 }`;
     }).join('\n');
 
-    const renderHtmlRecursive = (parentId) => {
+
+
+const renderHtmlRecursive = (parentId) => {
       const children = elements.filter(el => el.parentId === parentId);
       children.sort((a, b) => { if (Math.abs(a.y - b.y) > 5) return a.y - b.y; return a.x - b.x; });
       return children.map(el => {
-          const Tag = el.type === 'input' ? 'input' : (el.type === 'div' ? 'div' : (el.type === 'text' ? 'span' : 'button'));
+          // ▼ 修正: image の場合は 'img' タグにする
+          let Tag = 'button'; // デフォルト
+          if (el.type === 'div') Tag = 'div';
+          else if (el.type === 'text') Tag = 'span';
+          else if (el.type === 'input') Tag = 'input';
+          else if (el.type === 'image') Tag = 'img'; // ← これが重要！
+
           const idAttr = el.customId ? ` id="${el.customId}"` : '';
           const classAttr = ` class="${el.className || `el-${el.id}`}"`;
           const childrenHtml = renderHtmlRecursive(el.id);
-          if (el.type === 'input') return `  <${Tag}${idAttr}${classAttr} placeholder="${el.label}" />`;
+
+          // ▼ input と img は閉じタグがない（または特殊な）ので個別に処理
+          if (el.type === 'input') {
+             return `  <input${idAttr}${classAttr} placeholder="${el.label}" />`;
+          }
+          if (el.type === 'image') {
+             // imgタグとして正しく出力
+             return `  <img${idAttr}${classAttr} src="${el.style.src}" alt="img" />`;
+          }
+
+          // それ以外（div, button, text）
           let content = el.type === 'div' ? childrenHtml : (childrenHtml || el.label);
           return `  <${Tag}${idAttr}${classAttr}>\n    ${content}\n  </${Tag}>`;
         }).join('\n');
@@ -308,7 +376,6 @@ ${selector} {
     return { css, html: `<div class="blueprint-root">\n${renderHtmlRecursive(null)}\n</div>` };
   };
 
-  // --- 🗑️ 修正済: 画像生成処理を削除してシンプルに保存 ---
   const handleSave = async () => {
     if (!canEdit) return;
     if (!postTitle) {
@@ -370,7 +437,13 @@ ${selector} {
         onClick={(e) => e.stopPropagation()}
         onMouseEnter={() => setHoveringId(element.id)} onMouseLeave={() => setHoveringId(null)}
       >
-        {element.type === 'input' ? null : (
+        {element.type === 'image' ? (
+          <img
+            src={element.style.src}
+            alt="preview"
+            style={{ width: '100%', height: '100%', objectFit: element.style.objectFit, borderRadius: element.style.radius, pointerEvents: 'none' }}
+          />
+        ) : element.type === 'input' ? null : (
           <>
             {elements.filter(child => child.parentId === element.id).map(child => ( <RenderElement key={child.id} element={child} /> ))}
             {element.type !== 'div' && elements.filter(c => c.parentId === element.id).length === 0 && element.label}
@@ -387,6 +460,22 @@ ${selector} {
       </div>
     );
   };
+
+  const handleImageUpload = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+    if (file.size > 2 * 1024 * 1024) {
+    alert('画像サイズは2MB以下にしてください');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    updateStyle('src', reader.result);
+  };
+  reader.readAsDataURL(file);
+};
 
   const selEl = elements.find(el => el.id === selectedId);
   const currentStyle = selEl ? (editMode === 'normal' ? selEl.style : selEl.style.hover) : null;
@@ -427,6 +516,69 @@ ${selector} {
 
             <div className="property-section">
               <div className="section-label"><Palette size={10} /> Appearance</div>
+ {(selEl.type === 'image' || selEl.type === 'button') && (
+                <div className="control-row">
+                  <label className="control-label">
+                    {selEl.type === 'button' ? 'BG IMAGE' : 'UPLOAD'}
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                       // 画像アップロード処理 (共通化するか、ここで書く)
+                       const file = e.target.files[0];
+                       if (!file) return;
+                       if (file.size > 2 * 1024 * 1024) { alert('2MB以下にしてください'); return; }
+                       const reader = new FileReader();
+                       reader.onloadend = () => {
+                           // ボタンなら backgroundImage、画像パーツなら src に入れる
+                           const key = selEl.type === 'button' ? 'backgroundImage' : 'src';
+                           updateStyle(key, reader.result);
+                       };
+                       reader.readAsDataURL(file);
+                    }}
+                    className="control-input"
+                    style={{ padding: 4 }}
+                  />
+                  {selEl.type === 'button' && currentStyle.backgroundImage && (
+                      <button onClick={() => updateStyle('backgroundImage', null)} style={{fontSize:10, marginLeft:4}}>Remove</button>
+                  )}
+                </div>
+              )}
+
+              {selEl.type === 'button' && currentStyle.backgroundImage && (
+                  <div className="control-row">
+                    <label className="control-label">BG SIZE</label>
+                    <select disabled={!canEdit} value={currentStyle.backgroundSize} onChange={(e)=>updateStyle('backgroundSize', e.target.value)} className="control-select">
+                      <option value="cover">Cover (Crop)</option>
+                      <option value="contain">Contain (Fit)</option>
+                    </select>
+                  </div>
+              )}
+              {selEl.type === 'image' && (
+                <>
+                  <div className="control-row">
+                    <label className="control-label">IMAGE URL</label>
+                    <input
+                      disabled={!canEdit}
+                      type="text"
+                      value={currentStyle.src?.length > 50 ? '(Base64 Data)' : currentStyle.src}
+                      onChange={(e)=>updateStyle('src', e.target.value)}
+                      className="control-input"
+                      placeholder="https://..."
+                    />
+                  </div>
+                  {/* ▼ これです！ 画像用のトリミング設定 ▼ */}
+                  <div className="control-row">
+                    <label className="control-label">OBJECT FIT</label>
+                    <select disabled={!canEdit} value={currentStyle.objectFit} onChange={(e)=>updateStyle('objectFit', e.target.value)} className="control-select">
+                      <option value="cover">Cover (Fill)</option>
+                      <option value="contain">Contain (Fit)</option>
+                      <option value="fill">Stretch</option>
+                    </select>
+                  </div>
+                </>
+              )}
               {selEl.type !== 'text' && (
                 <>
                   <div className="control-row">
@@ -438,10 +590,36 @@ ${selector} {
                   </div>
                   {currentStyle.bgType === 'solid' ? (
                     <div className="control-row">
-                       <label className="control-label">BG COLOR</label>
-                       <div className="color-picker-wrapper">
-                          <input disabled={!canEdit} type="color" value={currentStyle.bgColor1} onChange={(e)=>updateStyle('bgColor1', e.target.value)} className="color-input"/>
-                       </div>
+                      <label className="control-label">BG COLOR</label>
+                      <div style={{display: 'flex', alignItems: 'center', gap: '8px', width: '100%'}}>
+                         {/* 1. 透明切り替えチェックボックス */}
+                         <label style={{fontSize: 10, display: 'flex', alignItems: 'center', cursor: 'pointer', color: '#64748b'}}>
+                           <input
+                             type="checkbox"
+                             checked={currentStyle.bgColor1 === 'transparent'}
+                             disabled={!canEdit}
+                             onChange={(e) => {
+                               // チェックされたら 'transparent'、外されたら 白('#ffffff') に戻す
+                               updateStyle('bgColor1', e.target.checked ? 'transparent' : '#ffffff');
+                             }}
+                             style={{marginRight: 4}}
+                           />
+                           Transparent
+                         </label>
+
+                         {/* 2. カラーピッカー (透明じゃない時だけ表示) */}
+                         {currentStyle.bgColor1 !== 'transparent' && (
+                           <div className="color-picker-wrapper" style={{flex: 1}}>
+                              <input
+                                disabled={!canEdit}
+                                type="color"
+                                value={currentStyle.bgColor1}
+                                onChange={(e)=>updateStyle('bgColor1', e.target.value)}
+                                className="color-input"
+                              />
+                           </div>
+                         )}
+                      </div>
                     </div>
                   ) : (
                     <>
@@ -502,6 +680,18 @@ ${selector} {
                   <label className="control-label">Border: {currentStyle.borderWidth}</label>
                   <input disabled={!canEdit} type="range" min="0" max="10" value={currentStyle.borderWidth} onChange={(e)=>updateStyle('borderWidth', parseInt(e.target.value))} className="range-slider"/>
               </div>
+              <div className="control-row">
+                 <label className="control-label">BORDER COLOR</label>
+                 <div className="color-picker-wrapper">
+                    <input
+                      disabled={!canEdit}
+                      type="color"
+                      value={currentStyle.borderColor || '#cbd5e1'}
+                      onChange={(e)=>updateStyle('borderColor', e.target.value)}
+                      className="color-input"
+                    />
+                 </div>
+              </div>
             </div>
 
             <div className="property-section">
@@ -547,6 +737,8 @@ ${selector} {
             <>
               <button onClick={()=>addElement('div')} className="tool-btn"><Square size={14}/> DIV</button>
               <button onClick={()=>addElement('text')} className="tool-btn"><Type size={14}/> TEXT</button>
+              <button onClick={()=>addElement('image')} className="tool-btn"><ImageIcon size={14}/> IMG</button>
+              <div className="toolbar-separator" />
               <div className="toolbar-separator" />
               <button onClick={()=>addElement('button')} className="tool-btn"><Plus size={14}/> BTN</button>
               <button onClick={()=>addElement('input')} className="tool-btn"><Plus size={14}/> INP</button>
@@ -577,19 +769,67 @@ ${selector} {
         </div>
       </div>
 
-      {showCode && (
-        <div className="code-modal-overlay" onClick={()=>setShowCode(false)}>
-          <div className="code-modal" onClick={e=>e.stopPropagation()}>
-            <h3 className="panel-title">GENERATED CODE</h3>
-            <div className="code-area">{`/* CSS */\n${generatedCss}\n\n\n${generatedHtml}`}</div>
-            <button onClick={()=>setShowCode(false)} className="tool-btn primary" style={{marginTop:10}}>CLOSE</button>
+        {showCode && (
+        <div className="code-modal-overlay" onClick={() => setShowCode(false)}>
+          <div className="code-modal" onClick={e => e.stopPropagation()} style={{ maxWidth: 800, width: '90%' }}>
+            <div className="panel-header" style={{ marginBottom: 16 }}>
+              <div className="panel-title"><Code size={16} style={{marginRight:8}}/> GENERATED CODE</div>
+            </div>
+
+            <div style={{ display: 'flex', gap: 20, height: 400 }}>
+              {/* CSS Area */}
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                  <span style={{ fontSize: 12, fontWeight: 'bold', color: '#64748b' }}>CSS</span>
+                  <button
+                    onClick={() => handleCopy(generatedCss, 'css')}
+                    className={`tool-btn ${copyStatus.css ? 'primary' : ''}`}
+                    style={{ height: 24, fontSize: 10, padding: '0 8px' }}
+                  >
+                    {copyStatus.css ? <Check size={12} style={{marginRight:4}}/> : <Copy size={12} style={{marginRight:4}}/>}
+                    {copyStatus.css ? 'COPIED!' : 'COPY CSS'}
+                  </button>
+                </div>
+                <textarea
+                  readOnly
+                  value={generatedCss}
+                  className="code-area"
+                  style={{ flex: 1, resize: 'none', fontFamily: 'monospace', fontSize: 12, padding: 10 }}
+                />
+              </div>
+
+              {/* HTML Area */}
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                  <span style={{ fontSize: 12, fontWeight: 'bold', color: '#64748b' }}>HTML</span>
+                  <button
+                    onClick={() => handleCopy(generatedHtml, 'html')}
+                    className={`tool-btn ${copyStatus.html ? 'primary' : ''}`}
+                    style={{ height: 24, fontSize: 10, padding: '0 8px' }}
+                  >
+                    {copyStatus.html ? <Check size={12} style={{marginRight:4}}/> : <Copy size={12} style={{marginRight:4}}/>}
+                    {copyStatus.html ? 'COPIED!' : 'COPY HTML'}
+                  </button>
+                </div>
+                <textarea
+                  readOnly
+                  value={generatedHtml}
+                  className="code-area"
+                  style={{ flex: 1, resize: 'none', fontFamily: 'monospace', fontSize: 12, padding: 10 }}
+                />
+              </div>
+            </div>
+
+            <div style={{ marginTop: 20, textAlign: 'right' }}>
+              <button onClick={() => setShowCode(false)} className="tool-btn" style={{ padding: '8px 24px' }}>CLOSE</button>
+            </div>
           </div>
         </div>
       )}
       {showSaveModal && (
         <div className="code-modal-overlay" onClick={()=>setShowSaveModal(false)}>
           <div className="code-modal" onClick={e=>e.stopPropagation()} style={{maxWidth: 400}}>
-            <h3 className="panel-title">SAVE BLUEPRINT</h3>
+            <h3 className="panel-title">SAVE</h3>
             <div style={{margin: '20px 0'}}>
               <label style={{display:'block', marginBottom:8, fontSize:12}}>TITLE</label>
               <input type="text" value={postTitle} onChange={(e)=>setPostTitle(e.target.value)} className="control-input" style={{width: '100%'}} autoFocus />
