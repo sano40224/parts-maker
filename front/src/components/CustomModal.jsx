@@ -24,7 +24,6 @@ export const useModal = () => {
     setIsOpen(true);
   }, []);
 
-  // ↓↓↓ ここが重要！削除用の関数を追加
   const showDeleteConfirm = useCallback((title, message, onConfirm) => {
     setConfig({ type: 'delete', title, message, onConfirm });
     setIsOpen(true);

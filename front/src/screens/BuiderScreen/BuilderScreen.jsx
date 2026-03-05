@@ -17,8 +17,8 @@ const getInitialStyle = (type) => {
     shadowX: 0, shadowY: 0, shadowBlur: 0, shadowSpread: 0, shadowColor: '#94a3b8',
     enableHover: false, hover: { scale: 1, color: '#334155' }
   };
-  if (type === 'button') return { ...base, width: 120, height: 40, radius: 4, bgColor1: '#2563eb', color: '#ffffff', shadowY: 4, shadowBlur: 6, shadowColor: '#cbd5e1', hover: { ...base.hover, scale: 1.05 } , backgroundImage: null ,backgroundSize: 'cover' };
-  if (type === 'input') return { ...base, width: 200, height: 40, radius: 4, borderWidth: 1, bgColor1: '#ffffff', borderColor: '#cbd5e1', padding: 10 };
+  if (type === 'button') return { ...base, width: 120, height: 40, radius: 4, bgColor1: '#2563eb', color: '#ffffff', shadowY: 4, shadowBlur: 6, shadowColor: '#cbd5e1', hover: { ...base.hover, scale: 1.05 } , backgroundImage: null ,backgroundSize: 'cover' ,fontFamily: 'sans-serif' };
+  if (type === 'input') return { ...base, width: 200, height: 40, radius: 4, borderWidth: 1, bgColor1: '#ffffff', borderColor: '#cbd5e1', padding: 10 , fontFamily: 'sans-serif' };
   if (type === 'image') return {
     ...base,
     width: 200, height: 150,
@@ -27,7 +27,7 @@ const getInitialStyle = (type) => {
     src: 'https://placehold.co/200x150',
     objectFit: 'cover'
   };
-  if (type === 'text') return { ...base, width: 100, height: 30, bgColor1: 'transparent', color: '#1e293b', fontSize: 16 };
+  if (type === 'text') return { ...base, width: 100, height: 30, bgColor1: 'transparent', color: '#1e293b', fontSize: 16 ,fontFamily: 'sans-serif'};
   if (type === 'div') return { ...base, width: 300, height: 400, radius: 8, borderWidth: 1, borderColor: '#94a3b8', bgColor1: '#f8fafc', position: 'relative', overflow: 'hidden' };
   return base;
 };
@@ -74,16 +74,6 @@ const getGlobalPos = (el, allElements) => {
 
 const getElementStyle = (element, isSelected, canEdit) => {
     const s = element.style;
-    let backgroundStyle = { background: getBackgroundCss(s) };
-    if (s.backgroundImage) {
-        backgroundStyle = {
-            backgroundImage: `url(${s.backgroundImage})`,
-            backgroundSize: s.backgroundSize || 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: s.bgColor1
-        };
-    }
     return {
         position: 'absolute',
         left: element.x,
@@ -95,6 +85,7 @@ const getElementStyle = (element, isSelected, canEdit) => {
         justifyContent: 'center',
         background: getFullBackgroundValue(s),
         color: s.color,
+        fontFamily: s.fontFamily || 'sans-serif', // ▼ 追加: フォントファミリーを適用
         borderRadius: s.radius,
         fontSize: s.fontSize,
         border: `${s.borderWidth}px solid ${isSelected ? '#3b82f6' : s.borderColor}`,
@@ -155,19 +146,19 @@ export default function BuilderScreen({ onBack, initialData }) {
   };
 
   const handleMouseMove = useCallback((e) => {
-    if (!operationRef.current.type || !selectedId) return;
-    const { type, handle, startX, startY, initial } = operationRef.current;
+    if (!operationRef.current.type || !operationRef.current.id) return;
+    const { id: targetId, type, handle, startX, startY, initial } = operationRef.current;
     const deltaX = e.clientX - startX;
     const deltaY = e.clientY - startY;
 
-    updateElement(selectedId, el => {
+    updateElement(targetId, el => {
       let { x, y, w, h } = initial;
       const newStyle = { ...el.style };
 
       if (type === 'move') {
         let newX = x + deltaX;
         let newY = y + deltaY;
-        const currentEl = elements.find(item => item.id === selectedId);
+        const currentEl = elements.find(item => item.id === targetId);
         const parentEl = currentEl && currentEl.parentId ? elements.find(item => item.id === currentEl.parentId) : null;
         if (parentEl) {
             const parentW = parseInt(parentEl.style.width) || 0;
@@ -193,7 +184,7 @@ export default function BuilderScreen({ onBack, initialData }) {
       }
       return { ...el, x, y, style: newStyle };
     });
-  }, [selectedId, elements]);
+    }, [elements]);
 
   const handleMouseUp = useCallback(() => {
     if (operationRef.current.type === 'move' && selectedId && canEdit) {
@@ -234,6 +225,7 @@ export default function BuilderScreen({ onBack, initialData }) {
     const el = elements.find(item => item.id === id);
     if (!el) return;
     operationRef.current = {
+        id: id,
         type: handleType ? 'resize' : 'move',
         handle: handleType,
         startX: e.clientX, startY: e.clientY,
@@ -306,7 +298,6 @@ export default function BuilderScreen({ onBack, initialData }) {
 
   const [copyStatus, setCopyStatus] = useState({ css: false, html: false });
 
-  // ▼ 追加: コピー関数
   const handleCopy = async (text, type) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -336,6 +327,7 @@ ${selector} {
   display: flex; align-items: center; justify-content: center;
   background: ${getFullBackgroundValue(s)};
   color: ${s.color}; border-radius: ${s.radius}px; font-size: ${s.fontSize}px;
+  font-family: ${s.fontFamily || 'sans-serif'};
   border: ${s.borderWidth}px solid ${s.borderColor || s.bgColor1}; box-shadow: ${getBoxShadowCss(s)};
   cursor: ${el.type === 'button' ? 'pointer' : 'default'}; box-sizing: border-box; 
   ${objectFitStyle}
@@ -348,27 +340,23 @@ const renderHtmlRecursive = (parentId) => {
       const children = elements.filter(el => el.parentId === parentId);
       children.sort((a, b) => { if (Math.abs(a.y - b.y) > 5) return a.y - b.y; return a.x - b.x; });
       return children.map(el => {
-          // ▼ 修正: image の場合は 'img' タグにする
-          let Tag = 'button'; // デフォルト
+          let Tag = 'button';
           if (el.type === 'div') Tag = 'div';
           else if (el.type === 'text') Tag = 'span';
           else if (el.type === 'input') Tag = 'input';
-          else if (el.type === 'image') Tag = 'img'; // ← これが重要！
+          else if (el.type === 'image') Tag = 'img';
 
           const idAttr = el.customId ? ` id="${el.customId}"` : '';
           const classAttr = ` class="${el.className || `el-${el.id}`}"`;
           const childrenHtml = renderHtmlRecursive(el.id);
 
-          // ▼ input と img は閉じタグがない（または特殊な）ので個別に処理
           if (el.type === 'input') {
              return `  <input${idAttr}${classAttr} placeholder="${el.label}" />`;
           }
           if (el.type === 'image') {
-             // imgタグとして正しく出力
              return `  <img${idAttr}${classAttr} src="${el.style.src}" alt="img" />`;
           }
 
-          // それ以外（div, button, text）
           let content = el.type === 'div' ? childrenHtml : (childrenHtml || el.label);
           return `  <${Tag}${idAttr}${classAttr}>\n    ${content}\n  </${Tag}>`;
         }).join('\n');
@@ -397,7 +385,7 @@ const renderHtmlRecursive = (parentId) => {
         css_code: css,
         setting: elements,
         original_author: isForked ? originalAuthor : null,
-        thumbnail: null // 画像は保存しない（CSS描画に任せる）
+        thumbnail: null
       };
 
       let message = '';
@@ -424,7 +412,6 @@ const renderHtmlRecursive = (parentId) => {
 
   const RenderElement = ({ element }) => {
     const isSelected = selectedId === element.id;
-    // 共通関数を使ってスタイルを取得
     const style = getElementStyle(element, isSelected, canEdit);
     const showHandles = isSelected && editMode === 'normal' && canEdit;
 
@@ -460,22 +447,6 @@ const renderHtmlRecursive = (parentId) => {
       </div>
     );
   };
-
-  const handleImageUpload = (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-
-    if (file.size > 2 * 1024 * 1024) {
-    alert('画像サイズは2MB以下にしてください');
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onloadend = () => {
-    updateStyle('src', reader.result);
-  };
-  reader.readAsDataURL(file);
-};
 
   const selEl = elements.find(el => el.id === selectedId);
   const currentStyle = selEl ? (editMode === 'normal' ? selEl.style : selEl.style.hover) : null;
@@ -516,7 +487,7 @@ const renderHtmlRecursive = (parentId) => {
 
             <div className="property-section">
               <div className="section-label"><Palette size={10} /> Appearance</div>
- {(selEl.type === 'image' || selEl.type === 'button') && (
+              {(selEl.type === 'image' || selEl.type === 'button') && (
                 <div className="control-row">
                   <label className="control-label">
                     {selEl.type === 'button' ? 'BG IMAGE' : 'UPLOAD'}
@@ -524,18 +495,36 @@ const renderHtmlRecursive = (parentId) => {
                   <input
                     type="file"
                     accept="image/*"
-                    onChange={(e) => {
-                       // 画像アップロード処理 (共通化するか、ここで書く)
+                    onChange={async (e) => {
                        const file = e.target.files[0];
                        if (!file) return;
-                       if (file.size > 2 * 1024 * 1024) { alert('2MB以下にしてください'); return; }
-                       const reader = new FileReader();
-                       reader.onloadend = () => {
-                           // ボタンなら backgroundImage、画像パーツなら src に入れる
+
+                       // 2MB制限
+                       if (file.size > 2 * 1024 * 1024) {
+                           showAlert('ERROR', '画像は2MB以下にしてください', 'error');
+                           return;
+                       }
+
+                       const formData = new FormData();
+                       formData.append('image', file);
+
+                       try {
+                           const response = await api.post('/upload', formData, {
+                               headers: {
+                                   'Content-Type': 'multipart/form-data',
+                               },
+                           });
+
+                           const imageUrl = response.data.url;
+
                            const key = selEl.type === 'button' ? 'backgroundImage' : 'src';
-                           updateStyle(key, reader.result);
-                       };
-                       reader.readAsDataURL(file);
+                           updateStyle(key, imageUrl);
+
+                           showAlert('SUCCESS', '画像をアップロードしました', 'success');
+                       } catch (error) {
+                           console.error(error);
+                           showAlert('ERROR', '画像のアップロードに失敗しました', 'error');
+                       }
                     }}
                     className="control-input"
                     style={{ padding: 4 }}
@@ -557,26 +546,25 @@ const renderHtmlRecursive = (parentId) => {
               )}
               {selEl.type === 'image' && (
                 <>
-                  <div className="control-row">
+                <div className="control-row">
                     <label className="control-label">IMAGE URL</label>
                     <input
                       disabled={!canEdit}
                       type="text"
-                      value={currentStyle.src?.length > 50 ? '(Base64 Data)' : currentStyle.src}
+                      value={currentStyle.src?.startsWith('data:image') ? '(Base64 Data)' : (currentStyle.src || '')}
                       onChange={(e)=>updateStyle('src', e.target.value)}
                       className="control-input"
                       placeholder="https://..."
                     />
-                  </div>
-                  {/* ▼ これです！ 画像用のトリミング設定 ▼ */}
-                  <div className="control-row">
-                    <label className="control-label">OBJECT FIT</label>
-                    <select disabled={!canEdit} value={currentStyle.objectFit} onChange={(e)=>updateStyle('objectFit', e.target.value)} className="control-select">
-                      <option value="cover">Cover (Fill)</option>
-                      <option value="contain">Contain (Fit)</option>
-                      <option value="fill">Stretch</option>
-                    </select>
-                  </div>
+                </div>
+                <div className="control-row">
+                  <label className="control-label">OBJECT FIT</label>
+                  <select disabled={!canEdit} value={currentStyle.objectFit} onChange={(e)=>updateStyle('objectFit', e.target.value)} className="control-select">
+                    <option value="cover">Cover (Fill)</option>
+                    <option value="contain">Contain (Fit)</option>
+                    <option value="fill">Stretch</option>
+                  </select>
+                </div>
                 </>
               )}
               {selEl.type !== 'text' && (
@@ -592,14 +580,12 @@ const renderHtmlRecursive = (parentId) => {
                     <div className="control-row">
                       <label className="control-label">BG COLOR</label>
                       <div style={{display: 'flex', alignItems: 'center', gap: '8px', width: '100%'}}>
-                         {/* 1. 透明切り替えチェックボックス */}
                          <label style={{fontSize: 10, display: 'flex', alignItems: 'center', cursor: 'pointer', color: '#64748b'}}>
                            <input
                              type="checkbox"
                              checked={currentStyle.bgColor1 === 'transparent'}
                              disabled={!canEdit}
                              onChange={(e) => {
-                               // チェックされたら 'transparent'、外されたら 白('#ffffff') に戻す
                                updateStyle('bgColor1', e.target.checked ? 'transparent' : '#ffffff');
                              }}
                              style={{marginRight: 4}}
@@ -607,7 +593,6 @@ const renderHtmlRecursive = (parentId) => {
                            Transparent
                          </label>
 
-                         {/* 2. カラーピッカー (透明じゃない時だけ表示) */}
                          {currentStyle.bgColor1 !== 'transparent' && (
                            <div className="color-picker-wrapper" style={{flex: 1}}>
                               <input
@@ -648,6 +633,27 @@ const renderHtmlRecursive = (parentId) => {
                     </>
                   )}
                 </>
+              )}
+
+              {(selEl.type === 'text' || selEl.type === 'button' || selEl.type === 'input') && (
+                <div className="control-row">
+                  <label className="control-label">FONT FAMILY</label>
+                  <select
+                    disabled={!canEdit}
+                    value={currentStyle.fontFamily || 'sans-serif'}
+                    onChange={(e)=>updateStyle('fontFamily', e.target.value)}
+                    className="control-select"
+                  >
+                    <option value="sans-serif">標準ゴシック (Sans-serif)</option>
+                    <option value="serif">標準明朝 (Serif)</option>
+                    <option value="monospace">等幅フォント (Monospace)</option>
+                    <option value="Arial, sans-serif">Arial</option>
+                    <option value="'Times New Roman', serif">Times New Roman</option>
+                    <option value="'Courier New', monospace">Courier New</option>
+                    <option value="Georgia, serif">Georgia</option>
+                    <option value="Verdana, sans-serif">Verdana</option>
+                  </select>
+                </div>
               )}
 
               <div className="control-row">
