@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, request, jsonify  # ← app のインポートを削除
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from config import Config
 from extensions import db, login_manager

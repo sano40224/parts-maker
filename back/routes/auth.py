@@ -9,8 +9,6 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
-    # フロントエンドからは小文字(username, email)で来る想定ですが、
-    # DBのカラム名は大文字(UserName, MailAddress)です。
     username = data.get('username')
     email = data.get('email')
     password = data.get('password')
